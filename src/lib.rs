@@ -77,19 +77,10 @@ impl<T> AtomicNonNull<T> {
         self.ptr.store(value.as_ptr(), order);
     }
 
-    /// Returns `Some` if the pointer is non-null, otherwise return `None`.
-    ///
     /// `get` takes an Ordering argument which describes the memory ordering
     /// of this operation. Possible values are SeqCst, Release and Relaxed.
     #[inline]
-    pub fn get(&self, order: Ordering) -> Option<*mut T> {
-        NonNull::new(self.get_unchecked(order)).map(|ptr| ptr.as_ptr())
-    }
-
-    /// `get_unchecked` takes an Ordering argument which describes the memory ordering
-    /// of this operation. Possible values are SeqCst, Release and Relaxed.
-    #[inline]
-    pub fn get_unchecked(&self, order: Ordering) -> *mut T {
+    pub fn get(&self, order: Ordering) -> *mut T {
         self.ptr.load(order)
     }
 

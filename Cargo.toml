@@ -1,6 +1,6 @@
 [package]
 name = "atomic_non_null"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 license-file = "LICENSE"
 repository = "https://github.com/hazelwiss/atomic_non_null"
