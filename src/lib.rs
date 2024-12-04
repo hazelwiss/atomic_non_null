@@ -74,21 +74,17 @@ impl<T> AtomicNonNull<T> {
         unsafe { Self::new_unchecked(ptr::dangling_mut()) }
     }
 
-    /// Sets the pointer to a non-null value with an atomic ordering of `order`.
-    ///
-    /// `set` takes an Ordering argument which describes the memory ordering
-    /// of this operation. Possible values are SeqCst, Release and Relaxed.
+    /// Look at [`core::sync::atomic::AtomicPtr::load`] for more information.
     #[inline]
-    pub fn set(&self, value: NonNull<T>, order: Ordering) {
-        self.ptr.store(value.as_ptr(), order);
-    }
-
-    /// `get` takes an Ordering argument which describes the memory ordering
-    /// of this operation. Possible values are SeqCst, Release and Relaxed.
-    #[inline]
-    pub fn get(&self, order: Ordering) -> NonNull<T> {
+    pub fn load(&self, order: Ordering) -> NonNull<T> {
         // SAFETY: `self` is always non-null.
         unsafe { NonNull::new_unchecked(self.ptr.load(order)) }
+    }
+
+    /// Look at [`core::sync::atomic::AtomicPtr::store`] for more information.
+    #[inline]
+    pub fn store(&self, value: NonNull<T>, order: Ordering) {
+        self.ptr.store(value.as_ptr(), order);
     }
 
     /// Look at [`core::sync::atomic::AtomicPtr::swap`] for more information.
