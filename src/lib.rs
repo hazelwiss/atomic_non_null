@@ -49,6 +49,12 @@ impl<T> AtomicNonNull<T> {
         }
     }
 
+    #[inline]
+    pub const fn from_non_null(ptr: NonNull<T>) -> Self {
+        // SAFETY: `NonNull` is never null.
+        unsafe { Self::new_unchecked(ptr.as_ptr()) }
+    }
+
     /// Look at [`core::ptr::with_exposed_provenance`] for more information.
     #[inline]
     pub fn with_exposed_provenance(addr: usize) -> Option<Self> {
@@ -80,8 +86,9 @@ impl<T> AtomicNonNull<T> {
     /// `get` takes an Ordering argument which describes the memory ordering
     /// of this operation. Possible values are SeqCst, Release and Relaxed.
     #[inline]
-    pub fn get(&self, order: Ordering) -> *mut T {
-        self.ptr.load(order)
+    pub fn get(&self, order: Ordering) -> NonNull<T> {
+        // SAFETY: `self` is always non-null.
+        unsafe { NonNull::new_unchecked(self.ptr.load(order)) }
     }
 
     /// Look at [`core::sync::atomic::AtomicPtr::swap`] for more information.
