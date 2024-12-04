@@ -1,0 +1,9 @@
+[package]
+name = "atomic_non_null"
+version = "0.1.0"
+edition = "2024"
+license-file = "LICENSE"
+repository = "https://github.com/hazelwiss/atomic_non_null"
+keywords = ["no-std", "minimal", "pointers", "wrapper", "convenience"]
+categories = ["no-std", "no-std::no-alloc", "rust-patterns"]
+description = "An atomic wrapper around NonNull"
